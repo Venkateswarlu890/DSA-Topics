@@ -1,0 +1,27 @@
+You are desining a tool analyze the structural integrity of wooden planks. Each plank has specific length, and you need to determine
+if three planks can form a trianle frame. the goal is to find the maximum perimeter of such triangle frame,if
+possible.
+A set of three can a valid triangle frame if they statify the triangle in equality
+
+* the sum of the lengths of any two planks must be greater than the length of the third plank
+if no such combinations exists, it mean a triangle frame cannot be formed, and the result should be -1
+
+Example 1:
+
+ INPUT
+
+n = 5
+plankslength= [10, 15, 5, 20,25]
+
+OUTPUT
+
+60
+
+Example 2:
+
+INPUT 
+ n = 4
+plankslength= [3, 1, 2, 1]
+
+OUTPUT
+-1
