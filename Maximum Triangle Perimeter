@@ -25,3 +25,110 @@ plankslength= [3, 1, 2, 1]
 
 OUTPUT
 -1
+
+
+Maximum Triangle Perimeter
+
+Intuition
+A triangle can be formed only if the sum of any two sides is greater than the third side, so we mainly check the largest side against the other two sides.
+
+To maximize the perimeter, it is better to try larger numbers first because larger sides will give a bigger perimeter.
+
+By sorting the Array in decreasing order, the largest elements appear first, making it easier to check the biggest possible triangle combinations.
+
+Once we find the first valid triple that satisfies the triangle condition, it automatically gives the maximum possible perimeter.
+
+Approach
+Sort the Array in descending order so that the largest side lengths are checked first.
+
+Traverse the Array and examine every group of three consecutive elements.
+
+For each group, check if the largest side is smaller than the sum of the other two sides to satisfy the triangle condition.
+
+If the condition holds, return the sum of the three sides as the maximum triangle perimeter; if no such triplet exists after checking all possibilities, return -1.
+
+
+Pseudo Code
+
+findMaxTrianglePerimeter(plankLengths) {
+    /* Get the number of elements in the Array */
+    n ← size of plankLengths
+    /* Sort the Array in descending order so that larger sides are checked first */
+    sort plankLengths in decreasing order
+    /* Traverse the Array and check every group of three consecutive elements */
+    for (i from 0 to n - 3) {
+        /* Check the triangle inequality condition */
+        /* A triangle is valid if the largest side is smaller than the sum of the other two */
+        if plankLengths[i] < plankLengths[i + 1] + plankLengths[i + 2] {
+            /* If a valid triangle is found, return its perimeter */
+            return plankLengths[i] + plankLengths[i + 1] + plankLengths[i + 2]
+        }
+    }
+    /* If no valid triangle can be formed, return -1 */
+    return -1
+}
+
+
+
+code in C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class solution {
+  public:
+    int findMaxTrianglePerimeter(vector<int> &plankLengths) {
+        int n = plankLengths.size();
+        sort(plankLengths.rbegin(), plankLengths.rend());
+        for (int i = 0; i <= n - 3; i++) {
+            if (plankLengths[i] < plankLengths[i + 1] + plankLengths[i + 2]) {
+                return plankLengths[i] + plankLengths[i + 1] + plankLengths[i + 2];
+            }
+        }
+        return -1;
+    }
+};
+
+/*
+int main(){
+    int n; cin >> n;
+    vector<int> nums(n);
+    for(int i = 0; i < n; i++) cin >> nums[i];
+    solution sol;
+    cout << (sol.findMaxTrianglePerimeter(nums));
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
