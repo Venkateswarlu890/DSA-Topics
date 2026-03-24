@@ -1,0 +1,120 @@
+************************************************************************************************************** STRING COMPRESSION ***********************************************************************************************************************************************
+
+Intuition:
+
+We scan the string character by character and observe that only consecutive identical characters matter for compression.
+
+Each time the character changes, it means the current group has ended and its frequency is finalized.
+
+So, we record the character along with how many times it appeared consecutively, preserving the original order.
+
+This process builds a compressed version where every character contributes exactly once per group.
+
+Finally, we compare the lengths of the original and compressed strings and return the shorter one as required.
+
+Approach:
+
+We want to compress the string by grouping consecutive identical characters and storing their frequencies.
+
+A new group starts only when the current character differs from the previous one.
+
+As long as characters are the same, we just increase the count of the current group.
+
+We first process the string:
+
+If the current character matches the last stored character, increment its count.
+
+Otherwise, start a new (character, count) group.
+
+Then we build the compressed string:
+
+Extract each stored group in order and append character + count to the result string.
+Finally, if the compressed string is shorter than the original, return it. Otherwise, return the original string as required.
+********************************************************************************************************************* PSEDUO CODE ************************************************************************************************
+strCompression(s) {
+    /* begin program execution */
+    create empty structure groups
+    /* to store characters and their consecutive counts */
+
+    for (i in range of 0 to length(s) - 1) {
+        /* traverse the string from left to right */
+        if (groups is not empty AND last character in groups == s[i]) {
+            increment count of last character
+            /* same character continues, increase frequency */
+        } else {
+            add (s[i], 1) to groups
+            /* new character group starts */
+        }
+    }
+
+    initialize compressed as empty string
+    /* to build the compressed result */
+
+    for (each (char, count) in groups in order) {
+        append char followed by count to compressed
+        /* form character + frequency */
+    }
+
+    if (length(compressed) < length(s)) {
+        return compressed
+        /* compressed string is shorter */
+    }
+
+    return s
+    /* return original string otherwise */
+}
+/* program execution completed */
+************************************************************************************************************ C++ CODE **********************************************************************************************************
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class solution {
+public:
+    string strCompression(string s) {
+        stack<pair<char, int>> st;
+        for (int i = 0; i < s.size(); i++) {
+            if (!st.empty() && st.top().first == s[i]) {
+                st.top().second++;
+            } else {
+                st.push({s[i], 1});
+            }
+        }
+        string compressed = "";
+        while (!st.empty()) {
+            compressed = st.top().first + to_string(st.top().second) + compressed;
+            st.pop();
+        }
+        return compressed.size() < s.size() ? compressed : s;
+    }
+};
+
+/*
+int main() {
+    string s;
+    cin >> s;
+
+    solution sol;
+    cout << sol.strCompression(s) << endl;
+
+    return 0;
+}
+*/
+**************************************************************************************************** TIME COMPLEXITY **********************************************************************************************************
+Time Complexity: O(n)
+
+We traverse the input string of length nonce to group consecutive identical characters →O(n).`
+
+We traverse the grouped characters once to build the compressed string → O(n) in total output length.
+
+Each comparison and update operation takes constant time.
+
+In total: O(n + n) = O(n).
+
+Space Complexity: O(n)  
+
+We store character–count pairs for each group of consecutive characters → O(g) where g ≤ n.
+
+The compressed string can take up to O(n) space in the worst case (all characters unique).
+
+Hence, the overall space complexity is O(n).
